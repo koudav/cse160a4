@@ -323,7 +323,7 @@ let g_lightOn = true;
 let g_lightPos = [0,1,-2];
 
 let g_normal = false;
-
+let g_lightMoving = true;
 // Set up actions for HTML UI elements
 function addActionsForHtmlUI() {
   
@@ -336,6 +336,7 @@ function addActionsForHtmlUI() {
   document.getElementById("normalOn").onclick = function() {g_normal = true; }
   document.getElementById("normalOff").onclick = function() {g_normal = false; }
   document.getElementById("lightOnCheckbox").onclick = function() {g_lightOn = !g_lightOn;}
+  document.getElementById("lightMovingCheckbox").onclick = function() {g_lightMoving = !g_lightMoving;}
   /*document.getElementById("pointButton").onclick = function() {g_selectedType = POINT; };
   document.getElementById("triButton").onclick = function() {g_selectedType = TRIANGLE; };
   document.getElementById("circleButton").onclick = function() {g_selectedType = CIRCLE; };
@@ -904,7 +905,11 @@ function updateAnimationAngles() {
     }
   }
 
-  g_lightPos[0] = Math.cos(g_seconds) * 2.5;
+  var light_x_offset;
+  if (g_lightMoving) {
+    light_x_offset = Math.sin(g_seconds * 1) * 0.01;
+    g_lightPos[0] += light_x_offset;
+  }
 }
 
 var g_mapGenerated = false;
